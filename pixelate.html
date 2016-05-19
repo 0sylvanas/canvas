@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script src="http://evt.dianping.com/midas/gitlab/zepto.min.js"></script>
+    <script>
+        var ca = document.getElementsByTagName('canvas')[0],
+            ctx = ca.getContext('2d');
+        ca.width = document.body.clientWidth;
+        ca.height = document.body.clientHeight;
+
+        var image = new Image();
+        image.src = 'a.jpg';
+
+        image.onload = function() {
+            //drawImage(源图像,截取开始坐标X,截取开始坐标Y,截取宽度,截取高度,图像绘制坐标X,图像绘制坐标Y,图像绘制宽度,图像绘制高度)
+            ctx.drawImage(image, 0, 0);
+
+            var imageData = ctx.getImageData(0, 0, 293, 220),
+                pixel = imageData.data;
+
+            //            ctx.clearRect(0, 0, 293, 220);
+            var numTileRows = 10,
+                numTileCols = 10;
+
+            var tileWidth = imageData.width / numTileRows,
+                tileHeight = imageData.height / numTileCols;
+
+            for (var r = 0; r < numTileRows; r++) {
+                for (var c = 0; c < numTileCols; c++) {
+                    var x = (c * tileWidth) + (tileWidth / 2),
+                        y = (r * tileHeight) + (tileHeight / 2),
+                        pos = (Math.floor(y) * (imageData.width * 4) + Math.floor(x) * 4);
+                    var red = pixel[pos],
+                        green = pixel[pos + 2],
+                        blue = pixel[pos + 3];
+                    ctx.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
+//                                        ctx.fillRect(x - (tileWidth / 2), y - (tileHeight / 2), tileWidth, tileHeight);
+                    ctx.beginPath();
+                    ctx.arc(x, y, tileWidth / 3, 0, Math.PI * 2, false);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>

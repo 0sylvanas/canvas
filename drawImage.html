@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script src="http://evt.dianping.com/midas/gitlab/zepto.min.js"></script>
+    <script>
+        var ca = document.getElementsByTagName('canvas')[0],
+            ctx = ca.getContext('2d');
+        ca.width = document.body.clientWidth;
+        ca.height = document.body.clientHeight;
+
+        var image = new Image();
+        image.src = 'a.jpg';
+        var example = new Image();
+        example.src = 'example.png';
+
+
+        image.onload = function() {
+            //drawImage(源图像,截取开始坐标X,截取开始坐标Y,截取宽度,截取高度,图像绘制坐标X,图像绘制坐标Y,图像绘制宽度,图像绘制高度)
+            ctx.drawImage(image, 0, 0);
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, 50, 50);
+            ctx.strokeStyle = '#f00';
+            ctx.strokeRect(50, 50, 200, 200);
+
+            ctx.translate(500, 0);
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#000';
+            ctx.drawImage(image, 50, 50, 200, 200, 50, 50, 100, 100);
+            ctx.fillRect(0, 0, 50, 50);
+            ctx.strokeRect(50, 50, 100, 100);
+
+            //example image
+            var drawExample = function() {
+                ctx.translate(-500, 250);
+                ctx.drawImage(example, 0, 0, 700, 500);
+            };
+            if (example.complete) {
+                drawExample()
+            } else {
+                example.onload = drawExample;
+            }
+        };
+    </script>
+</body>
+
+</html>

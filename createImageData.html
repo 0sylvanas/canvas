@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var ca = document.getElementsByTagName('canvas')[0],
+            ctx = ca.getContext('2d');
+        ca.width = document.body.clientWidth;
+        ca.height = document.body.clientHeight;
+
+        var imageData = ctx.createImageData(200, 200),
+            pixels = imageData.data;
+
+        for (var i = 0, len = (imageData.width * imageData.height); i < len; i++) {
+            pixels[i * 4] = Math.floor(Math.random() * 255);
+            pixels[i * 4 + 1] = Math.floor(Math.random() * 255);
+            pixels[i * 4 + 2] = Math.floor(Math.random() * 255);
+            pixels[i * 4 + 3] = Math.floor(Math.random() * 255);
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+
+
+        var imageData2 = ctx.createImageData(500, 500),
+            pixels2 = imageData2.data;
+
+        var numTileRows = 10,
+            numTileCols = 10;
+
+        var tileWidth = imageData2.width / numTileRows,
+            tileHeight = imageData2.height / numTileCols;
+
+        for (var r = 0; r < numTileRows; r++) {
+            for (var c = 0; c < numTileCols; c++) {
+                var red = Math.floor(Math.random() * 255),
+                    green = Math.floor(Math.random() * 255),
+                    blue = Math.floor(Math.random() * 255);
+                var avg = (red + green + blue) / 3;
+                for (var tr = 0; tr < tileHeight; tr++) {
+                    for (var tc = 0; tc < tileWidth; tc++) {
+                        var trueX = (c * tileWidth) + tc,
+                            trueY = (r * tileHeight) + tr;
+
+                        var pos = (trueY * (imageData2.width * 4) + (trueX * 4));
+                        //                        pixels2[pos] = red;
+                        //                        pixels2[pos + 1] = green;
+                        //                        pixels2[pos + 2] = blue;
+                        pixels2[pos + 3] = '255';
+
+                        pixels2[pos] = avg;
+                        pixels2[pos + 1] = avg;
+                        pixels2[pos + 2] = avg;
+                    }
+                }
+            }
+        }
+        ctx.putImageData(imageData2, 0, 250);
+    </script>
+</body>
+
+</html>

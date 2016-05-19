@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script src="http://evt.dianping.com/midas/gitlab/zepto.min.js"></script>
+    <script>
+        var cvs = document.getElementsByTagName('canvas')[0],
+            ctx = cvs.getContext('2d');
+        cvs.width = document.body.clientWidth;
+        cvs.height = document.body.clientHeight;
+
+        var image = new Image();
+        image.src = 'a.jpg';
+
+        image.onload = function() {
+            //drawImage(源图像,截取开始坐标X,截取开始坐标Y,截取宽度,截取高度,图像绘制坐标X,图像绘制坐标Y,图像绘制宽度,图像绘制高度)
+            ctx.drawImage(image, 0, 0);
+            $(cvs).on('click', function(e) {
+                var pixelArr = ctx.getImageData(e.pageX - cvs.offsetLeft, e.pageY - cvs.offsetTop, 1, 1).data;
+                $('body').css('background-color', 'rgba(' + pixelArr[0] + ',' + pixelArr[1] + ',' + pixelArr[2] + ',' + pixelArr[3] + ')');
+            });
+            $(cvs).mousemove(function(e) {
+                var pixelArr = ctx.getImageData(e.pageX - cvs.offsetLeft, e.pageY - cvs.offsetTop, 1, 1).data;
+                $('body').css('background-color', 'rgba(' + pixelArr[0] + ',' + pixelArr[1] + ',' + pixelArr[2] + ',' + pixelArr[3] + ')');
+            });
+        };
+    </script>
+</body>
+
+</html>

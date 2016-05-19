@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var ca = document.getElementsByTagName('canvas')[0],
+            ctx = ca.getContext('2d');
+        ca.width = document.body.clientWidth;
+        ca.height = document.body.clientHeight;
+
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.quadraticCurveTo(100, 100, 200, 100);
+        ctx.bezierCurveTo(150, 350, 350, 100, 450, 250);
+        ctx.fill();
+    </script>
+</body>
+
+</html>

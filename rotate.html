@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var ca = document.getElementsByTagName('canvas')[0],
+            ctx = ca.getContext('2d');
+        ca.width = document.body.clientWidth;
+        ca.height = document.body.clientHeight;
+
+        ctx.translate(Math.sqrt(30 * 30 + 30 * 30) / 2, 0);
+        ctx.rotate(Math.PI / 4);
+        ctx.fillRect(0, 0, 30, 30);
+    </script>
+</body>
+
+</html>
